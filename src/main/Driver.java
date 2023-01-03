@@ -44,7 +44,7 @@ public class Driver {
                 ┊  0) Exit                         ┊
                 └┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┘
                  """);
-        return ScannerInput.validNextInt("==>> ");
+        return ScannerInput.validNextInt("==>>  ");
     }
 
     private void runMainMenu() {
@@ -56,7 +56,7 @@ public class Driver {
                 case 3 -> runReportsMenu();
                 case 4 -> searchAppsBySpecificCriteria();
                 case 5 -> // TODO Sort Apps by Name
-                case 6 -> // TODO print the recommended apps
+                case 6 -> show
                 case 7 -> // TODO print the random app of the day
                 case 8 -> simulateRatings();
                 case 20 -> saveAllData();
@@ -96,7 +96,10 @@ public class Driver {
         while (option != 0) {
             switch (option) {
                 case 1 -> addDeveloper();
-                case 2 -> runViewList();
+                case 2 -> S {
+                    System.out.println("List of Developers are:");
+                    System.out.println(developerAPI.listDevelopers());
+                }
                 case 3 -> updateDeveloper();
                 case 4 -> deleteDeveloper();
                 default -> System.out.println("Invalid option entered" + option);
@@ -154,7 +157,11 @@ public class Driver {
         while (option != 0) {
             switch (option) {
                 case 1 ->{
+                    System.out.println("List of Developers are:");
+                    System.out.println(developerAPI.listDevelopers());
+
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
+                    Developer developer = developerAPI.getDeveloperByName(developerName);
                     String appName = ScannerInput.validNextLine("Enter the App Name:  ");
                     double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
                     double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
@@ -163,8 +170,13 @@ public class Driver {
                     isAdded = appStoreAPI.addApp(new EducationApp(developer, appName, appSize, appCost, appVersion, level));
                 }
                 case 2 ->{
+                    System.out.println("List of Developers are:");
+                    System.out.println(developerAPI.listDevelopers());
+
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
+                    Developer developer = developerAPI.getDeveloperByName(developerName);
                     String appName = ScannerInput.validNextLine("Enter the App Name:  ");
+
                     double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
                     double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
                     double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
@@ -173,9 +185,13 @@ public class Driver {
 
                 }
                 case 3 ->{
+                    System.out.println("List of Developers are:");
+                    System.out.println(developerAPI.listDevelopers());
+
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
-                    Developer developer = developerName
+                    Developer developer = developerAPI.getDeveloperByName(developerName);
                     String appName = ScannerInput.validNextLine("Enter the App Name:  ");
+
                     double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
                     double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
                     double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
@@ -234,15 +250,14 @@ public class Driver {
                 ┊   0) RETURN to main menu   ┊
                 └┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┘
                  """);
-        return ScannerInput.validNextInt("==>> ");
+        return ScannerInput.validNextInt("==>>  ");
     }
-
     private void runReportsMenu() {
         int option = reportsMenu();
         while (option != 0) {
             switch (option) {
-                case 1 ->
-                case 2 ->
+                case 1 -> System.out.println(appStoreAPI.listAllApps());
+                case 2 -> System.out.println(developerAPI.listDevelopers());
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
@@ -277,6 +292,7 @@ public class Driver {
     }
 
     private void deleteDeveloper() {
+        System.out.println();
         String developerName = ScannerInput.validNextLine("Please enter the developer name: ");
         if (developerAPI.removeDeveloper(developerName) != null) {
             System.out.println("Delete successful");
@@ -369,6 +385,11 @@ public class Driver {
         ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
+    private void showListOfRecommendedApp(){
+        System.out.println("List of Recommended Apps are:");
+        System.out.println(appStoreAPI.listAllRecommendedApps());
+        ScannerInput.validNextLine("\n Press the enter key to continue");
+    }
     //--------------------------------------------------
     //  Persistence Menu Items
     //--------------------------------------------------

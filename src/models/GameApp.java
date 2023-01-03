@@ -25,7 +25,10 @@ public class GameApp extends App{
     }
 
     public boolean isRecommendedApp(){
-        if(isMultiplayer() && )
+        if(isMultiplayer() && Utilities.greaterThanOrEqualTo(calculateRating(),4)){
+            return true;
+        }
+        return false;
     }
 
 

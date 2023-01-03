@@ -1,8 +1,6 @@
 package models;
 
-import models.EducationApp;
-import models.GameApp;
-import models.ProductivityApp;
+
 import models.Rating;
 
 import utils.Utilities;
@@ -69,9 +67,10 @@ public abstract class App {
     }
 
     public double calculateRating(){
-        if(numberOfStars != 0){
+        if(Rating.getNumberOfStars() != 0){
             th
         }
+        return 0.0;
     }
 
 
@@ -114,7 +113,7 @@ public abstract class App {
     }
 
     public boolean isRecommendedApp(){
-
+        return isRecommendedApp;
     }
 
     public String toString(){

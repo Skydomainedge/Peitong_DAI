@@ -61,11 +61,35 @@ public class AppStoreAPI {
     }
 
     public String listAllEducationApps(){
+        String str = "";
 
+        for (App app : apps) {
+            if (app instanceof EducationApp) {
+                str += apps.indexOf(app) + ": " + app.display() + "\n";
+            }
+        }
+
+        if (str.isEmpty()) {
+            return "No Event Posts";
+        } else {
+            return str;
+        }
     }
 
     public String listAllProductivityApps(){
-}
+        String str = "";
+
+        for (App app : apps) {
+            if (app instanceof ProductivityApp) {
+                str += apps.indexOf(app) + ": " + app.display() + "\n";
+            }
+        }
+
+        if (str.isEmpty()) {
+            return "No Event Posts";
+        } else {
+            return str;
+        }
     }
 
     public String listAllAppsByName(){
