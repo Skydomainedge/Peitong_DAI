@@ -4,6 +4,7 @@ import controllers.AppStoreAPI;
 import controllers.DeveloperAPI;
 import models.*;
 import utils.ScannerInput;
+import utils.Utilities;
 
 public class Driver {
 
@@ -123,15 +124,76 @@ public class Driver {
         int option = appStoreMenu();
         while (option != 0) {
             switch (option) {
-                case 1 ->
-                case 2 -> System.out.println(appStoreAPI.listAllApps());
-                          System.out.println(appStoreAPI.listAllApps());
+                case 1 -> runAddAppLists();
+                case 2 -> runViewList();
                 case 3 ->
                 case 4 ->
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
             option = mainMenu();
+        }
+    }
+
+    private int addAppLists() {
+        System.out.println("""
+                ┌┈┈┈┈┈┈App Category Menu┄┄┄┄┄┐
+                ┊   1) Education app         ┊
+                ┊   2) Game app              ┊
+                ┊   3) Productivity app      ┊
+                ┊   0) RETURN                ┊
+                └┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┘
+                 """);
+        return ScannerInput.validNextInt("==>> ");
+    }
+
+
+    private void runAddAppLists() {
+        boolean isAdded = false;
+        int option = addAppLists();
+        while (option != 0) {
+            switch (option) {
+                case 1 ->{
+                    String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
+                    String appName = ScannerInput.validNextLine("Enter the App Name:  ");
+                    Double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
+                    Double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
+                    Double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
+                    Boolean isRecommendedApp = false;
+                    isAdded = appStoreAPI.addApp(new EducationApp(developer, appName, appSize, appCost, appVersion, isRecommendedApp));
+                }
+                case 2 ->{
+                    String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
+                    String appName = ScannerInput.validNextLine("Enter the App Name:  ");
+                    Double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
+                    Double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
+                    Double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
+                    Boolean isMultiplayer = Utilities.YNtoBoolean(ScannerInput.validNextChar("Is it a Multiplayer Game(Y/N):  "));
+                    isAdded = appStoreAPI.addApp(new GameApp(developer, appName, appSize, appCost, appVersion, isMultiplayer));
+
+                }
+                case 3 ->{
+                    String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
+                    String appName = ScannerInput.validNextLine("Enter the App Name:  ");
+                    Double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
+                    Double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
+                    Double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
+                    Boolean isRecommendedApp = false;
+                    isAdded = appStoreAPI.addApp(new ProductivityApp(developer, appName, appSize, appCost, appVersion, isRecommendedApp));
+
+                }
+
+                default -> System.out.println("Invalid option entered      " + option);
+            }
+            if (isAdded){
+                System.out.println("Post Added Successfully");
+            }
+            else{
+                System.out.println("No Post Added");
+            }
+            ScannerInput.validNextLine("\n Press the enter key to continue");
+
+            option = appStoreMenu();
         }
     }
 
@@ -152,16 +214,17 @@ public class Driver {
         int option = viewLists();
         while (option != 0) {
             switch (option) {
-                case 1 ->
-                case 2 ->
-                case 3 ->
-                case 4 ->
+                case 1 ->showListOfAllApp();
+                case 2 ->showListOfEducationApp();
+                case 3 ->showListOfGameApp();
+                case 4 ->showListOfProductivityApp();
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
             option = appStoreMenu();
         }
     }
+
     private int reportsMenu() {
         System.out.println("""
                 ┌┈┈┈┈┈┈┈┈┈Report Menu┄┈┈┄┄┄┄┄┐
@@ -244,11 +307,40 @@ public class Driver {
         int option = ScannerInput.validNextInt("==>> ");
         switch (option) {
             // TODO Search methods below
-            // case 1 -> searchAppsByName();
-            // case 2 -> searchAppsByDeveloper(readValidDeveloperByName());
-            // case 3 -> searchAppsEqualOrAboveAStarRating();
-            // default -> System.out.println("Invalid option");
+            case 1 -> searchAppsByName();
+            case 2 -> searchAppsByDeveloper(readValidDeveloperByName());
+            case 3 -> searchAppsEqualOrAboveAStarRating();
+            default -> System.out.println("Invalid option");
         }
+    }
+    private void searchAppsByName(){
+        if (appStoreAPI.numberOfApps()==0){
+            System.out.println("no apps");
+        }else {
+            String name = ScannerInput.validNextLine("Please enter Name");
+            System.out.println(appStoreAPI.searchAppByDescription(name));
+        }
+    }
+    }
+    private void searchAppsByDeveloper(Developer readValidDeveloperByName){
+        String s="";
+        if (notes.size()==0){
+            return "No notes stored";
+        }else {
+            for (int i=0;i<notes.size();i++){
+                Note note=notes.get(i);
+                if (note.getNoteTitle().contains(searchString)){
+                    s=s+note.toString();
+                }
+            }
+        }
+        if (s.equals("")){
+            return "No notes found for:";
+        }else
+            return s;
+    }
+    private void searchAppsEqualOrAboveAStarRating(){
+
     }
 
     //--------------------------------------------------
@@ -265,6 +357,31 @@ public class Driver {
         }
     }
 
+    private void showListOfAllApp(){
+        System.out.println("List of All Apps are:");
+        System.out.println(appStoreAPI.listAllApps());
+        ScannerInput.validNextLine("\n Press the enter key to continue");
+    }
+
+    private void showListOfEducationApp(){
+        System.out.println("List of Education Apps are:");
+        System.out.println(appStoreAPI.listAllApps());
+        ScannerInput.validNextLine("\n Press the enter key to continue");
+    }
+
+    private void showListOfGameApp(){
+        System.out.println("List of Game Apps are:");
+        System.out.println(appStoreAPI.listAllApps());
+        ScannerInput.validNextLine("\n Press the enter key to continue");
+
+    }
+
+    private void showListOfProductivityApp(){
+        System.out.println("List of Productivity Apps are:");
+        System.out.println(appStoreAPI.listAllApps());
+        ScannerInput.validNextLine("\n Press the enter key to continue");
+    }
+
     //--------------------------------------------------
     //  Persistence Menu Items
     //--------------------------------------------------
@@ -278,6 +395,7 @@ public class Driver {
         } catch (Exception e) {
             System.err.println("Error writing to file: " + e);
         }
+        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void loadAllData() {
@@ -289,6 +407,7 @@ public class Driver {
         } catch (Exception e) {
             System.err.println("Error reading from file: " + e);
         }
+        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
 }

@@ -1,12 +1,13 @@
 package models;
 
-import utils.Utilities;
-public class EducationApp {
+
+import utils.*;
+public class EducationApp extends App{
 
     private int level = 0;
 
     public EducationApp(Developer developer, String appName, double appSize, double appCost, double appVersion, boolean isRecommendedApp){
-
+        super(developer,appName,appSize,appCost,appVersion);
     }
 
     public int getLevel(){
@@ -23,12 +24,11 @@ public class EducationApp {
 
     }
 
-    public String appSummary(){
-
-    }
-
     public String toString(){
-
+        return getAppName() +"(V" + getAppVersion() + ") "
+                + "  by " + getDeveloper()
+                + "€" + getAppCost()
+                +"Rating: "+ calculateRating();
     }
 
 }

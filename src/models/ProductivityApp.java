@@ -1,9 +1,11 @@
 package models;
 
-public class ProductivityApp {
+import utils.Utilities;
 
-    public ProductivityApp(Developer developer, String appName, double appSize, double appCost, double appVersion, boolean isRecommendedApp){
+public class ProductivityApp extends App{
 
+    public ProductivityApp(Developer developer, String appName, double appSize, double appCost, double appVersion){
+        super(developer,appName,appSize,appCost,appVersion);
     }
 
     public boolean isRecommendedApp(){
@@ -14,7 +16,10 @@ public class ProductivityApp {
     }
 
     public String toString(){
-
+        return getAppName() +"(V" + getAppVersion() + ") "
+                + "  by " + getDeveloper()
+                + "€" + getAppCost()
+                +"Rating: "+ calculateRating();
     }
 
 }

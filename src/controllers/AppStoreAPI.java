@@ -20,14 +20,21 @@ public class AppStoreAPI {
     private List<App> apps = new ArrayList<>;
 
     public boolean addApp(App app){
-
+        return apps.add(app);
     }
 
     public String listAllApps(){
-        if (apps.size() == 0) {
-            return "No apps";
-        } else return apps.toString();
+        String str = "";
 
+        for (App app : apps) {
+            str += apps.indexOf(app) + ": " + app.toString() + "\n";
+        }
+
+        if (str.isEmpty()) {
+            return "No Posts";
+        } else {
+            return str;
+        }
     }
 
     public String listSummaryOfAllApps(){
@@ -38,43 +45,31 @@ public class AppStoreAPI {
     }
 
     public String listAllGameApps(){
-        String s = "";
-        if (numberOfActiveNotes() == 0) {
-            return "No active notes stored";
-        } else {
-            for (int i = 0; i < notes.size(); i++) {
-                Note note = notes.get(i);
-                if (!note.isNoteArchived()) {
-                    s = s + note.toString();
-                }
+        String str = "";
+
+        for (App app : apps) {
+            if (app instanceof GameApp) {
+                str += apps.indexOf(app) + ": " + app.display() + "\n";
             }
         }
 
-        return s;
+        if (str.isEmpty()) {
+            return "No Event Posts";
+        } else {
+            return str;
+        }
     }
 
     public String listAllEducationApps(){
-        if (notes.size() == 0) {
-            return "No notes stored";
-        } else {
-            return notes.toString();
-        }
+
     }
 
     public String listAllProductivityApps(){
-        if (notes.size() == 0) {
-            return "No notes stored";
-        } else {
-            return notes.toString();
-        }
+}
     }
 
     public String listAllAppsByName(){
-        if (notes.size() == 0) {
-            return "No notes stored";
-        } else {
-            return notes.toString();
-        }
+
     }
 
     public String listAllAppsAboveOrEqualAGivenStarRating(){
@@ -99,7 +94,7 @@ public class AppStoreAPI {
     }
 
     public App randomApp(){
-
+        return apps<int random(1,20) >
     }
 
     public void simulateRatings() {
@@ -110,7 +105,27 @@ public class AppStoreAPI {
     }
 
     public App getAppByName(String appName){
+        String s="";
+        if (apps.size()==0){
+            return "No notes stored";
+        }else {
+            for (int i=0;i<notes.size();i++){
+                Note note=notes.get(i);
+                ArrayList<Item> items=note.getItems();
+                for (int j=0;j<items.size();j++){
+                    Item item=items.get(j);
+                    if (item.getDescription().contains(searchString)){
+                        s=s+note.getNoteTitle()+j+": "+item.toString();
+                    }
+                }
 
+
+            }
+        }
+        if (s.equals("")){
+            return "No items found for: "+searchString;
+        }else
+            return s;
     }
 
     public App getAppByIndex(String index){

@@ -14,35 +14,34 @@ public abstract class App {
     private String appName = "No app name";
     private double appSize = 0;
     private double appVersion = 1.0;
-    private double appCost = 0;
+    private double appCost = 0.0;
 
     private ArrayList<Rating> ratings = new ArrayList<>;
 
     public App(Developer developer, String appName, double appSize, double appCost, double appVersion){
         this.developer=developer;
         this.appName = Utilities.truncateString(appName, 100);
-        this.appSize = appSize;
-        this.appCost = appCost;
-        this.appVersion = appVersion;
 
+        if (Utilities.validRange(appSize,1,1000)) {
+            this.appVersion =appVersion;
+        }
+        if (Utilities.greaterThanOrEqualTo(appCost,0.0)) {
+            this.appVersion =appVersion;
+        }
+        if (Utilities.greaterThanOrEqualTo(appVersion,1)) {
+            this.appVersion =appVersion;
+        }
     }
 
-    public boolean addRating(Rating rating){
-        return ratings.add();
-    }
+
 
     public static String appSummary(){
         String str =
     }
 
-    public double calculateRating(){
-        if(numberOfStars != 0){
-            th
-        }
-    }
 
-    public double getAppCost(){
-        return appCost;
+    public Developer getDeveloper(){
+        return developer;
     }
 
     public String getAppName(){
@@ -53,21 +52,28 @@ public abstract class App {
         return appSize;
     }
 
+    public double getAppCost(){
+        return appCost;
+    }
+
     public double getAppVersion(){
         return appVersion;
     }
 
-    public Developer getDeveloper(){
-        return developer;
-    }
 
     public ArrayList<Rating> getRating(){
         return ratings;
     }
-
-    public boolean isRecommendedApp(){
-
+    public boolean addRating(Rating rating){
+        return ratings.add();
     }
+
+    public double calculateRating(){
+        if(numberOfStars != 0){
+            th
+        }
+    }
+
 
     public String listRatings(){
         String str ="";
@@ -79,15 +85,19 @@ public abstract class App {
         return str;
     }
 
-    public void setAppCost(){
+    public void setDeveloper(Developer developer){
 
     }
 
-    public void setAppName(){
+    public void setAppName(String appName){
 
     }
 
-    public void setAppSize(){
+    public void setAppSize(String appSize){
+
+    }
+
+    public void setAppCost( ){
 
     }
 
@@ -95,7 +105,7 @@ public abstract class App {
 
     }
 
-    public void setDeveloper(){
+    public boolean isRecommendedApp(){
 
     }
 
@@ -103,7 +113,7 @@ public abstract class App {
         return appName +"(V" + appVersion + ") "
                 + "  by " +developer.getDeveloperName()
                 + "€" + appCost
-                +"Rating: "+ ratings.getNumberOfStars();
+                +"Rating: "+ calculateRating();
     }
 
 
