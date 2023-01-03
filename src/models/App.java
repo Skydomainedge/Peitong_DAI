@@ -1,10 +1,11 @@
 package models;
 
 
-import models.Rating;
-
 import utils.Utilities;
+
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.math.BigDecimal;
 
 public abstract class App {
 
@@ -14,7 +15,7 @@ public abstract class App {
     private double appVersion = 1.0;
     private double appCost = 0.0;
 
-    private ArrayList<Rating> ratings = new ArrayList<>;
+    private ArrayList<Rating> ratings = new ArrayList<>();
 
     public App(Developer developer, String appName, double appSize, double appCost, double appVersion){
         this.developer=developer;
@@ -59,18 +60,26 @@ public abstract class App {
     }
 
 
-    public ArrayList<Rating> getRating(){
+    public ArrayList<Rating> getRatings(){
         return ratings;
     }
     public boolean addRating(Rating rating){
-        return ratings.add();
+        return ratings.add(rating);
     }
 
     public double calculateRating(){
-        if(Rating.getNumberOfStars() != 0){
-            th
+        double allStars = 0;
+        int counts = 0 ;
+        double average;
+
+        for (){allStars += rating.getNumberOfStars()}
+        if (allStars != 0){
+            average = allStars/counts;
+            BigDecimal bd = new BigDecimal(average);
+            double averageRating = bd.setScale(1, RoundingMode.DOWN).doubleValue();
+            return averageRating;
         }
-        return 0.0;
+        else return 0.0;
     }
 
 
@@ -85,7 +94,7 @@ public abstract class App {
     }
 
     public void setDeveloper(Developer developer){
-
+        this.developer = developer;
     }
 
     public void setAppName(String appName){
@@ -113,7 +122,7 @@ public abstract class App {
     }
 
     public boolean isRecommendedApp(){
-        return isRecommendedApp;
+        return false;
     }
 
     public String toString(){

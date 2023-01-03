@@ -107,16 +107,16 @@ public class EducationAppTest {
             //Validation: appSize(1-1000)
             assertEquals(1, edAppBelowBoundary.getAppSize());
 
-            edAppBelowBoundary.setAppSize(1000);
+            edAppBelowBoundary.setAppSize(1000.0);
             assertEquals(1000, edAppBelowBoundary.getAppSize()); //update
 
-            edAppBelowBoundary.setAppSize(1001);
+            edAppBelowBoundary.setAppSize(1001.0);
             assertEquals(1000, edAppBelowBoundary.getAppSize()); //no update
 
-            edAppBelowBoundary.setAppSize(2);
+            edAppBelowBoundary.setAppSize(2.0);
             assertEquals(2, edAppBelowBoundary.getAppSize()); //update
 
-            edAppBelowBoundary.setAppSize(0);
+            edAppBelowBoundary.setAppSize((double) 0);
             assertEquals(2, edAppBelowBoundary.getAppSize()); //no update
         }
 

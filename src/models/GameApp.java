@@ -21,14 +21,11 @@ public class GameApp extends App{
 
 
     public boolean isMultiplayer(){
-        return  isMultiplayer;
+        return isMultiplayer;
     }
 
     public boolean isRecommendedApp(){
-        if(isMultiplayer() && Utilities.greaterThanOrEqualTo(calculateRating(),4)){
-            return true;
-        }
-        return false;
+        return isMultiplayer() && Utilities.greaterThanOrEqualTo(calculateRating(), 4);
     }
 
 

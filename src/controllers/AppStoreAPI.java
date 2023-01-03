@@ -17,7 +17,7 @@ import static utils.RatingUtility.generateRandomRating;
 
 public class AppStoreAPI {
 
-    private List<App> apps = new ArrayList<>;
+    private List<App> apps = new ArrayList<>();
 
     public boolean addApp(App app){
         return apps.add(app);
@@ -49,7 +49,7 @@ public class AppStoreAPI {
 
         for (App app : apps) {
             if (app instanceof GameApp) {
-                str += apps.indexOf(app) + ": " + app.display() + "\n";
+                str += apps.indexOf(app) + ": " + GameApp.toString() + "\n";
             }
         }
 
@@ -122,18 +122,30 @@ public class AppStoreAPI {
     }
 
     public void simulateRatings() {
+
     }
 
     public boolean isValidAppName(String appName){
-        if(Utilities.validateStringLength(appName))
+        if(appName == ){
+
+        }else return false;
     }
 
     public App getAppByName(String appName){
-
+        int index = retrieveDeveloperIndex(developerName);
+        if (index != -1){
+            return apps.get(index);
+        }
+        return null;
     }
 
-    public App getAppByIndex(String index){
-
+    public App getAppByIndex(int index){
+        if (Utilities.isValidIndex(apps, index)){
+            return apps.get(index);
+        }
+        else{
+            return null;
+        }
     }
 
     public boolean isValidIndex(int index) {
@@ -148,7 +160,7 @@ public class AppStoreAPI {
 
     }
 
-    private void swapApps(){
+    private void swapApps(List app, int i, int j){
 
     }
 

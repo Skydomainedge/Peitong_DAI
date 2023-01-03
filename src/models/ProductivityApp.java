@@ -9,10 +9,7 @@ public class ProductivityApp extends App{
     }
 
     public boolean isRecommendedApp(){
-        if(Utilities.greaterThanOrEqualTo(getAppCost(),1.99) && Utilities.greaterThanOrEqualTo(calculateRating(),3)){
-            return true;
-        }
-        else return false;
+        return Utilities.greaterThanOrEqualTo(getAppCost(), 1.99) && Utilities.greaterThanOrEqualTo(calculateRating(), 3);
     }
 
     public String toString(){

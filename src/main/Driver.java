@@ -55,8 +55,8 @@ public class Driver {
                 case 2 -> runAppStoreMenu();
                 case 3 -> runReportsMenu();
                 case 4 -> searchAppsBySpecificCriteria();
-                case 5 -> // TODO Sort Apps by Name
-                case 6 -> show
+                case 5 -> sortApp();
+                case 6 -> showListOfRecommendedApp();
                 case 7 -> // TODO print the random app of the day
                 case 8 -> simulateRatings();
                 case 20 -> saveAllData();
@@ -276,6 +276,7 @@ public class Driver {
         } else {
             System.out.println("Add not successful");
         }
+        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void updateDeveloper() {
@@ -284,21 +285,44 @@ public class Driver {
         if (developer != null) {
             String developerWebsite = ScannerInput.validNextLine("Please enter new website: ");
             if (developerAPI.updateDeveloperWebsite(developer.getDeveloperName(), developerWebsite))
+            {
                 System.out.println("Developer Website Updated");
+                ScannerInput.validNextLine("\n Press the enter key to continue");
+            }
             else
+            {
                 System.out.println("Developer Website NOT Updated");
+                ScannerInput.validNextLine("\n Press the enter key to continue");
+            }
         } else
+        {
             System.out.println("Developer name is NOT valid");
+            ScannerInput.validNextLine("\n Press the enter key to continue");
+        }
+
     }
 
     private void deleteDeveloper() {
-        System.out.println();
+        System.out.println(developerAPI.listDevelopers());
         String developerName = ScannerInput.validNextLine("Please enter the developer name: ");
         if (developerAPI.removeDeveloper(developerName) != null) {
             System.out.println("Delete successful");
         } else {
             System.out.println("Delete not successful");
         }
+
+    }
+
+    private void updateApp(){
+
+    }
+
+    private void deleteApp(){
+
+    }
+
+    private void sortApp(){
+        appStoreAPI.sortAppsByNameAscending();
     }
 
     private Developer readValidDeveloperByName() {
