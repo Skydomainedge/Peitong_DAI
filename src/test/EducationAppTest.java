@@ -252,7 +252,7 @@ public class EducationAppTest {
         edApp.addRating(new Rating(rating1, "John Doe", "Very Good"));
         edApp.addRating(new Rating(rating2, "Jane Doe", "Excellent"));
 
-        //verifying all conditions are true for a recommended educational app]
+        //verifying all conditions are true for a recommended educational app
         assertEquals(2, edApp.getRatings().size());  //two ratings are added
         assertEquals(1.0, edApp.getAppCost(), 0.01);
         assertEquals(((rating1 + rating2) / 2.0), edApp.calculateRating(), 0.01);

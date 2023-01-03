@@ -90,19 +90,27 @@ public abstract class App {
     }
 
     public void setAppName(String appName){
-
+        if(Utilities.validateStringLength(appName,80)){
+            this.appName = appName;
+        }
     }
 
-    public void setAppSize(String appSize){
-
+    public void setAppSize(Double appSize){
+        if(Utilities.validRange(appSize,1,1000)){
+            this.appSize = appSize;
+        }
     }
 
-    public void setAppCost( ){
-
+    public void setAppCost(double appCost){
+        if(Utilities.validRange(appCost,1,1000)){
+            this.appCost = appCost;
+        }
     }
 
-    public void setAppVersion(){
-
+    public void setAppVersion(double appVersion){
+        if(Utilities.greaterThanOrEqualTo(appVersion,1.0)){
+            this.appVersion = appVersion;
+        }
     }
 
     public boolean isRecommendedApp(){

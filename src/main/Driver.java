@@ -126,8 +126,8 @@ public class Driver {
             switch (option) {
                 case 1 -> runAddAppLists();
                 case 2 -> runViewList();
-                case 3 ->
-                case 4 ->
+                case 3 -> updateApp();
+                case 4 -> deleteApp();
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
@@ -156,40 +156,41 @@ public class Driver {
                 case 1 ->{
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
                     String appName = ScannerInput.validNextLine("Enter the App Name:  ");
-                    Double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
-                    Double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
-                    Double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
-                    Boolean isRecommendedApp = false;
-                    isAdded = appStoreAPI.addApp(new EducationApp(developer, appName, appSize, appCost, appVersion, isRecommendedApp));
+                    double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
+                    double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
+                    double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
+                    int level = ScannerInput.validNextInt("Enter the App Level:  ");
+                    isAdded = appStoreAPI.addApp(new EducationApp(developer, appName, appSize, appCost, appVersion, level));
                 }
                 case 2 ->{
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
                     String appName = ScannerInput.validNextLine("Enter the App Name:  ");
-                    Double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
-                    Double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
-                    Double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
-                    Boolean isMultiplayer = Utilities.YNtoBoolean(ScannerInput.validNextChar("Is it a Multiplayer Game(Y/N):  "));
+                    double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
+                    double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
+                    double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
+                    boolean isMultiplayer = Utilities.YNtoBoolean(ScannerInput.validNextChar("Is it a Multiplayer Game(Y/N):  "));
                     isAdded = appStoreAPI.addApp(new GameApp(developer, appName, appSize, appCost, appVersion, isMultiplayer));
 
                 }
                 case 3 ->{
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
+                    Developer developer = developerName
                     String appName = ScannerInput.validNextLine("Enter the App Name:  ");
-                    Double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
-                    Double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
-                    Double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
-                    Boolean isRecommendedApp = false;
-                    isAdded = appStoreAPI.addApp(new ProductivityApp(developer, appName, appSize, appCost, appVersion, isRecommendedApp));
+                    double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
+                    double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
+                    double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
+
+                    isAdded = appStoreAPI.addApp(new ProductivityApp(developer, appName, appSize, appCost, appVersion));
 
                 }
 
                 default -> System.out.println("Invalid option entered      " + option);
             }
             if (isAdded){
-                System.out.println("Post Added Successfully");
+                System.out.println("App Added Successfully");
             }
             else{
-                System.out.println("No Post Added");
+                System.out.println("No App Added");
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
 
@@ -318,26 +319,12 @@ public class Driver {
             System.out.println("no apps");
         }else {
             String name = ScannerInput.validNextLine("Please enter Name");
-            System.out.println(appStoreAPI.searchAppByDescription(name));
+            System.out.println(appStoreAPI.getAppByName(name));
         }
     }
-    }
+
     private void searchAppsByDeveloper(Developer readValidDeveloperByName){
-        String s="";
-        if (notes.size()==0){
-            return "No notes stored";
-        }else {
-            for (int i=0;i<notes.size();i++){
-                Note note=notes.get(i);
-                if (note.getNoteTitle().contains(searchString)){
-                    s=s+note.toString();
-                }
-            }
-        }
-        if (s.equals("")){
-            return "No notes found for:";
-        }else
-            return s;
+
     }
     private void searchAppsEqualOrAboveAStarRating(){
 
@@ -365,20 +352,20 @@ public class Driver {
 
     private void showListOfEducationApp(){
         System.out.println("List of Education Apps are:");
-        System.out.println(appStoreAPI.listAllApps());
+        System.out.println(appStoreAPI.listAllEducationApps());
         ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void showListOfGameApp(){
         System.out.println("List of Game Apps are:");
-        System.out.println(appStoreAPI.listAllApps());
+        System.out.println(appStoreAPI.listAllGameApps());
         ScannerInput.validNextLine("\n Press the enter key to continue");
 
     }
 
     private void showListOfProductivityApp(){
         System.out.println("List of Productivity Apps are:");
-        System.out.println(appStoreAPI.listAllApps());
+        System.out.println(appStoreAPI.listAllProductivityApps());
         ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 

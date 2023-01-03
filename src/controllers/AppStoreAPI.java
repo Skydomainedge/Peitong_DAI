@@ -71,7 +71,9 @@ public class AppStoreAPI {
     public String listAllAppsByName(){
 
     }
+    public int numberOfAppsByChosenDeveloper(Developer developer){
 
+    }
     public String listAllAppsAboveOrEqualAGivenStarRating(){
 
     }
@@ -85,9 +87,7 @@ public class AppStoreAPI {
 
     }
 
-    public int numberOfAppsByChosenDeveloper(Developer developer){
 
-    }
 
     public App deleteAppByIndex(int Index){
 
@@ -105,27 +105,7 @@ public class AppStoreAPI {
     }
 
     public App getAppByName(String appName){
-        String s="";
-        if (apps.size()==0){
-            return "No notes stored";
-        }else {
-            for (int i=0;i<notes.size();i++){
-                Note note=notes.get(i);
-                ArrayList<Item> items=note.getItems();
-                for (int j=0;j<items.size();j++){
-                    Item item=items.get(j);
-                    if (item.getDescription().contains(searchString)){
-                        s=s+note.getNoteTitle()+j+": "+item.toString();
-                    }
-                }
 
-
-            }
-        }
-        if (s.equals("")){
-            return "No items found for: "+searchString;
-        }else
-            return s;
     }
 
     public App getAppByIndex(String index){

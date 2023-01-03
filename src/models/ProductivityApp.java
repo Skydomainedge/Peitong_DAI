@@ -17,9 +17,10 @@ public class ProductivityApp extends App{
 
     public String toString(){
         return getAppName() +"(V" + getAppVersion() + ") "
+                + (isRecommendedApp() ? "  [Recommended]" : "")
                 + "  by " + getDeveloper()
-                + "€" + getAppCost()
-                +"Rating: "+ calculateRating();
+                + "  €" + getAppCost()
+                + "  Rating: " + calculateRating();
     }
 
 }

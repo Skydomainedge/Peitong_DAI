@@ -6,8 +6,9 @@ public class EducationApp extends App{
 
     private int level = 0;
 
-    public EducationApp(Developer developer, String appName, double appSize, double appCost, double appVersion, boolean isRecommendedApp){
+    public EducationApp(Developer developer, String appName, double appSize, double appCost, double appVersion,int level){
         super(developer,appName,appSize,appCost,appVersion);
+        this.level = level;
     }
 
     public int getLevel(){
@@ -21,14 +22,19 @@ public class EducationApp extends App{
     }
 
     public boolean isRecommendedApp(){
-
+        if(getAppCost() > 0.99 && calculateRating() >= 3.5 && level >= 3){
+            return true;
+        }else return false;
     }
 
     public String toString(){
         return getAppName() +"(V" + getAppVersion() + ") "
+                + (isRecommendedApp() ? "  [Recommended]" : "")
+                + "  Level: " + level
                 + "  by " + getDeveloper()
-                + "€" + getAppCost()
-                +"Rating: "+ calculateRating();
+                + "  €" + getAppCost()
+                + "  Rating: "+ calculateRating()
+                + "  Size: " + getAppSize();
     }
 
 }
