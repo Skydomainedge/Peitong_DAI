@@ -6,6 +6,8 @@ import models.*;
 import utils.ScannerInput;
 import utils.Utilities;
 
+import java.nio.channels.AlreadyBoundException;
+
 public class Driver {
 
     //TODO Some skeleton code has been given to you.
@@ -55,9 +57,9 @@ public class Driver {
                 case 2 -> runAppStoreMenu();
                 case 3 -> runReportsMenu();
                 case 4 -> searchAppsBySpecificCriteria();
-                case 5 -> sortApp();
+                case 5 -> sortAppByName();
                 case 6 -> showListOfRecommendedApp();
-                case 7 -> // TODO print the random app of the day
+                case 7 -> printRandomApp();
                 case 8 -> simulateRatings();
                 case 20 -> saveAllData();
                 case 21 -> loadAllData();
@@ -96,7 +98,7 @@ public class Driver {
         while (option != 0) {
             switch (option) {
                 case 1 -> addDeveloper();
-                case 2 -> S {
+                case 2 ->  {
                     System.out.println("List of Developers are:");
                     System.out.println(developerAPI.listDevelopers());
                 }
@@ -105,7 +107,7 @@ public class Driver {
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
-            option = mainMenu();
+            option = developerMenu();
         }
     }
 
@@ -134,7 +136,7 @@ public class Driver {
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
-            option = mainMenu();
+            option = appStoreMenu();
         }
     }
 
@@ -149,15 +151,15 @@ public class Driver {
                  """);
         return ScannerInput.validNextInt("==>> ");
     }
-
-
     private void runAddAppLists() {
         boolean isAdded = false;
         int option = addAppLists();
         while (option != 0) {
             switch (option) {
                 case 1 ->{
-                    System.out.println("List of Developers are:");
+                    System.out.println(appStoreAPI.listAllEducationApps());
+                    ScannerInput.validNextLine("\n Press the enter key to view the existed Developer");
+                    System.out.println("\n\nList of Developers are:");
                     System.out.println(developerAPI.listDevelopers());
 
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
@@ -167,10 +169,13 @@ public class Driver {
                     double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
                     double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
                     int level = ScannerInput.validNextInt("Enter the App Level:  ");
+
                     isAdded = appStoreAPI.addApp(new EducationApp(developer, appName, appSize, appCost, appVersion, level));
                 }
                 case 2 ->{
-                    System.out.println("List of Developers are:");
+                    System.out.println(appStoreAPI.listAllGameApps());
+                    ScannerInput.validNextLine("\n Press the enter key to view the existed developer");
+                    System.out.println("\n\nList of Developers are:");
                     System.out.println(developerAPI.listDevelopers());
 
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
@@ -185,7 +190,9 @@ public class Driver {
 
                 }
                 case 3 ->{
-                    System.out.println("List of Developers are:");
+                    System.out.println(appStoreAPI.listAllGameApps());
+                    ScannerInput.validNextLine("\n Press the enter key to view the existed developer");
+                    System.out.println("\n\nList of Developers are:");
                     System.out.println(developerAPI.listDevelopers());
 
                     String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
@@ -213,7 +220,6 @@ public class Driver {
             option = appStoreMenu();
         }
     }
-
     private int viewLists() {
         System.out.println("""
                 ┌┈┈┈┈┈┈┈App Lists Menu┄┈┄┄┄┄┄┐
@@ -242,6 +248,52 @@ public class Driver {
         }
     }
 
+    private void updateApp() {
+        System.out.println("List of all apps are:\n" + appStoreAPI.listAllApps());
+        App app=runReadAppMethodLists();
+        System.out.println("List of Developers are:\n" + developerAPI.listDevelopers());
+        String developerName = ScannerInput.validNextLine("Enter the Developer Name:  ");
+        Developer developer = developerAPI.getDeveloperByName(developerName);
+        String appName = ScannerInput.validNextLine("Enter the App Name:  ");
+        double appSize = ScannerInput.validNextDouble("Enter the App Size:  ");
+        double appCost = ScannerInput.validNextDouble("Enter the App Cost:  ");
+        double appVersion = ScannerInput.validNextDouble("Enter the App Version:  ");
+        app.setDeveloper(developer);
+        app.setAppName(appName);
+        app.setAppCost(appCost);
+        app.setAppSize(appSize);
+        app.setAppVersion(appVersion);
+        if (app != null) System.out.println("App Added Successfully");else System.out.println("No App Added");
+        ScannerInput.validNextLine("\n Press the enter key to continue");
+
+
+
+    }
+    private int readAppMethodLists() {
+        System.out.println("""
+               Select the Method to read app
+                   1) Index
+                   2) Name
+                   0) RETURN
+                 """);
+        return ScannerInput.validNextInt("==>> ");
+    }
+    private App runReadAppMethodLists(){
+        int option = readAppMethodLists();
+            switch (option) {
+                case 1 ->{
+                    return readValidAppByIndex();
+                }
+                case 2 ->{
+                    return readValidAppByName();
+                }
+                default -> System.out.println("Invalid option entered" + option);
+            }
+        return null;
+    }
+
+
+
     private int reportsMenu() {
         System.out.println("""
                 ┌┈┈┈┈┈┈┈┈┈Report Menu┄┈┈┄┄┄┄┄┐
@@ -256,12 +308,12 @@ public class Driver {
         int option = reportsMenu();
         while (option != 0) {
             switch (option) {
-                case 1 -> System.out.println(appStoreAPI.listAllApps());
+                case 1 -> System.out.println(appStoreAPI.allAppOverview());
                 case 2 -> System.out.println(developerAPI.listDevelopers());
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.validNextLine("\n Press the enter key to continue");
-            option = mainMenu();
+            option = reportsMenu();
         }
     }
 
@@ -276,30 +328,46 @@ public class Driver {
         } else {
             System.out.println("Add not successful");
         }
-        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void updateDeveloper() {
-        System.out.println(developerAPI.listDevelopers());
-        Developer developer = readValidDeveloperByName();
+        System.out.println("List of Developers are:\n" + developerAPI.listDevelopers());
+        Developer developer = runReadDeveloperMethodLists();
         if (developer != null) {
             String developerWebsite = ScannerInput.validNextLine("Please enter new website: ");
             if (developerAPI.updateDeveloperWebsite(developer.getDeveloperName(), developerWebsite))
             {
                 System.out.println("Developer Website Updated");
-                ScannerInput.validNextLine("\n Press the enter key to continue");
             }
             else
             {
                 System.out.println("Developer Website NOT Updated");
-                ScannerInput.validNextLine("\n Press the enter key to continue");
             }
-        } else
-        {
-            System.out.println("Developer name is NOT valid");
-            ScannerInput.validNextLine("\n Press the enter key to continue");
-        }
+        } else System.out.println("Developer name is NOT valid");
 
+
+    }
+    private int readDeveloperMethodLists() {
+        System.out.println("""
+               Select the Method to read
+                   1) Index
+                   2) Name
+                   0) RETURN
+                 """);
+        return ScannerInput.validNextInt("==>> ");
+    }
+    private Developer runReadDeveloperMethodLists(){
+        int option = readDeveloperMethodLists();
+        switch (option) {
+            case 1 -> {
+                return readValidDeveloperByIndex();
+            }
+            case 2 -> {
+                return readValidDeveloperByName();
+            }
+            default -> System.out.println("Invalid option entered" + option);
+        }
+        return null;
     }
 
     private void deleteDeveloper() {
@@ -312,18 +380,12 @@ public class Driver {
         }
 
     }
-
-    private void updateApp(){
-
+    
+    private void printRandomApp(){
+        App randomApp = appStoreAPI.randomApp();
+        System.out.println(randomApp);
     }
 
-    private void deleteApp(){
-
-    }
-
-    private void sortApp(){
-        appStoreAPI.sortAppsByNameAscending();
-    }
 
     private Developer readValidDeveloperByName() {
         String developerName = ScannerInput.validNextLine("Please enter the developer's name: ");
@@ -333,6 +395,48 @@ public class Driver {
             return null;
         }
     }
+    private Developer readValidDeveloperByIndex() {
+        int index = ScannerInput.validNextInt("Please enter the index of developer: ");
+        if (developerAPI.isValidIndex(index)) {
+            return developerAPI.getDeveloperByIndex(index);
+        } else {
+            return null;
+        }
+    }
+    private App readValidAppByName() {
+        String appName = ScannerInput.validNextLine("Please enter app's name: ");
+        if (appStoreAPI.isValidAppName(appName)) {
+            return appStoreAPI.getAppByName(appName);
+        } else {
+            return null;
+        }
+    }
+    private App readValidAppByIndex() {
+        int index = ScannerInput.validNextInt("Please enter the index of app: ");
+        if (appStoreAPI.isValidIndex(index)) {
+            return appStoreAPI.getAppByIndex(index);
+        } else {
+            return null;
+        }
+    }
+
+    private void deleteApp(){
+        System.out.println(appStoreAPI.listAllApps());
+        int index = ScannerInput.validNextInt("Please enter the index of the app to delete");
+        App appExistence =appStoreAPI.deleteAppByIndex(index);
+        if (appExistence != null){
+            System.out.println("Delete Successful!");
+        } else {
+            System.out.println("Delete NOT Successful");
+        }
+    }
+
+
+    private void sortAppByName(){
+        appStoreAPI.sortAppsByNameAscending();
+        System.out.println("Sorting Completed");
+    }
+
 
 
 
@@ -354,20 +458,17 @@ public class Driver {
             default -> System.out.println("Invalid option");
         }
     }
-    private void searchAppsByName(){
-        if (appStoreAPI.numberOfApps()==0){
-            System.out.println("no apps");
-        }else {
-            String name = ScannerInput.validNextLine("Please enter Name");
-            System.out.println(appStoreAPI.getAppByName(name));
-        }
+    private void searchAppsByName() {
+        String appName = ScannerInput.validNextLine("Please enter the app's name: ");
+        System.out.println(appStoreAPI.listAllAppsByName(appName));
     }
 
-    private void searchAppsByDeveloper(Developer readValidDeveloperByName){
-
+    private void searchAppsByDeveloper(Developer developer){
+        if (developer == null) System.out.println("This developer is not in the app store"); else System.out.println(appStoreAPI.listAllAppsByChosenDeveloper(developer));
     }
     private void searchAppsEqualOrAboveAStarRating(){
-
+        int rating = ScannerInput.validNextInt("Please enter the rating: ");
+        System.out.println(appStoreAPI.listAllAppsAboveOrEqualAGivenStarRating(rating));
     }
 
     //--------------------------------------------------
@@ -387,32 +488,26 @@ public class Driver {
     private void showListOfAllApp(){
         System.out.println("List of All Apps are:");
         System.out.println(appStoreAPI.listAllApps());
-        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void showListOfEducationApp(){
         System.out.println("List of Education Apps are:");
         System.out.println(appStoreAPI.listAllEducationApps());
-        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void showListOfGameApp(){
         System.out.println("List of Game Apps are:");
         System.out.println(appStoreAPI.listAllGameApps());
-        ScannerInput.validNextLine("\n Press the enter key to continue");
-
     }
 
     private void showListOfProductivityApp(){
         System.out.println("List of Productivity Apps are:");
         System.out.println(appStoreAPI.listAllProductivityApps());
-        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void showListOfRecommendedApp(){
         System.out.println("List of Recommended Apps are:");
         System.out.println(appStoreAPI.listAllRecommendedApps());
-        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
     //--------------------------------------------------
     //  Persistence Menu Items
@@ -427,7 +522,6 @@ public class Driver {
         } catch (Exception e) {
             System.err.println("Error writing to file: " + e);
         }
-        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
 
     private void loadAllData() {
@@ -439,7 +533,5 @@ public class Driver {
         } catch (Exception e) {
             System.err.println("Error reading from file: " + e);
         }
-        ScannerInput.validNextLine("\n Press the enter key to continue");
     }
-
 }

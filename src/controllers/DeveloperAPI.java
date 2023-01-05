@@ -3,7 +3,7 @@ package controllers;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.*;
-import utils.Utilities;
+import utils.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeveloperAPI {
+public class DeveloperAPI implements ISerializer{
 
 
     private List<Developer> developers = new ArrayList<>();
@@ -31,12 +31,7 @@ public class DeveloperAPI {
     // Read methods
     //---------------------
     public Developer getDeveloperByIndex(int index){
-        if (Utilities.isValidIndex(developers, index)){
-            return developers.get(index);
-        }
-        else{
-            return null;
-        }
+        return  isValidIndex(index) ? developers.get(index) : null;
     }
 
     public Developer getDeveloperByName (String developerName){
@@ -94,6 +89,10 @@ public class DeveloperAPI {
             }
         }
         return false;
+    }
+
+    public boolean isValidIndex(int index) {
+        return (index >= 0) && (index < developers.size());
     }
 
     public int retrieveDeveloperIndex(String developerName){

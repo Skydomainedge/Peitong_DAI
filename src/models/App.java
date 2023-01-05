@@ -18,24 +18,22 @@ public abstract class App {
     private ArrayList<Rating> ratings = new ArrayList<>();
 
     public App(Developer developer, String appName, double appSize, double appCost, double appVersion){
-        this.developer=developer;
-        this.appName = Utilities.truncateString(appName, 100);
-
-        if (Utilities.validRange(appSize,1,1000)) {
-            this.appVersion =appVersion;
-        }
-        if (Utilities.greaterThanOrEqualTo(appCost,0.0)) {
-            this.appVersion =appVersion;
-        }
-        if (Utilities.greaterThanOrEqualTo(appVersion,1)) {
-            this.appVersion =appVersion;
-        }
+        setDeveloper(developer);
+        setAppName(appName);
+        setAppSize(appSize);
+        setAppVersion(appVersion);
+        setAppCost(appCost);
     }
 
 
 
-    public static String appSummary(){
-        String str =
+    public String appSummary(){
+        String str = appName +"(V" + appVersion + ") "
+                + "  by " + developer.toString()
+                + "€" + appCost
+                +"Rating: " + calculateRating()
+                + listRatings();
+        return str;
     }
 
 
@@ -72,7 +70,7 @@ public abstract class App {
         int counts = 0 ;
         double average;
 
-        for (){allStars += rating.getNumberOfStars()}
+        for (Rating rating : ratings) allStars += rating.getNumberOfStars();
         if (allStars != 0){
             average = allStars/counts;
             BigDecimal bd = new BigDecimal(average);
@@ -85,12 +83,10 @@ public abstract class App {
 
     public String listRatings(){
         String str ="";
-        if(ratings.size() !=0){
-            for (int i =0;i <ratings.size();i++)
-                str += ratings.toString();
-            }
-        else str ="No ratings added yet";
-        return str;
+        for (Rating rating : ratings) {
+            str += rating.toString() + "\n";
+        }
+        return ratings.size() ==0 ?  "No ratings added yet" : str;
     }
 
     public void setDeveloper(Developer developer){
@@ -121,9 +117,7 @@ public abstract class App {
         }
     }
 
-    public boolean isRecommendedApp(){
-        return false;
-    }
+    public abstract boolean isRecommendedApp();
 
     public String toString(){
         return appName +"(V" + appVersion + ") "

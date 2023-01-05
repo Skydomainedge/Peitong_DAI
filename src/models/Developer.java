@@ -8,7 +8,7 @@ public class Developer {
     private String developerWebsite = "<no website>";
 
     public Developer(String developerName, String developerWebsite) {
-        this.developerName = developerName;
+        setDeveloperName(developerName);
         this.developerWebsite = developerWebsite;
     }
 
@@ -38,7 +38,7 @@ public class Developer {
 
     @Override
     public String toString() {
-        return  developerName + "(" + developerWebsite + ")";
+        return  developerName + " (" + developerWebsite + ")";
     }
 
 }

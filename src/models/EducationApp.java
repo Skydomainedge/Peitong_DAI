@@ -8,7 +8,7 @@ public class EducationApp extends App{
 
     public EducationApp(Developer developer, String appName, double appSize, double appCost, double appVersion,int level){
         super(developer,appName,appSize,appCost,appVersion);
-        this.level = level;
+        setLevel(level);
     }
 
     public int getLevel(){
@@ -29,12 +29,12 @@ public class EducationApp extends App{
 
     public String toString(){
         return getAppName() +"(V" + getAppVersion() + ") "
-                + (isRecommendedApp() ? "  [Recommended]" : "")
-                + "  Level: " + level
-                + "  by " + getDeveloper()
-                + "  €" + getAppCost()
-                + "  Rating: "+ calculateRating()
-                + "  Size: " + getAppSize();
+                + (isRecommendedApp() ? "  <Recommended>" : "")
+                + "\n  Level: " + level
+                + "\n  by " + getDeveloper()
+                + "\n  €" + getAppCost()
+                + "\n  Rating: "+ calculateRating()
+                + "\n  Size: " + getAppSize();
     }
 
 }

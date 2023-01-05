@@ -9,11 +9,11 @@ public class GameApp extends App{
 
     public GameApp(Developer developer, String appName, double appSize, double appCost, double appVersion, boolean isMultiplayer){
         super(developer,appName,appSize,appCost,appVersion);
-        this.isMultiplayer = isMultiplayer;
+        setMultiplayer(isMultiplayer);
     }
 
-    public void setMultiplayer(boolean isMulti){
-        if (isMulti){
+    public void setMultiplayer(boolean isMultiplayer){
+        if (isMultiplayer){
             this.isMultiplayer = true;
         }
         else this.isMultiplayer = false;
@@ -32,11 +32,11 @@ public class GameApp extends App{
     public String toString(){
         return getAppName() +"(V" + getAppVersion() + ") "
                 + "  "+(isMultiplayer ? "[Multiplayer]":"[Solo]")
-                + (isRecommendedApp() ? "  [Recommended]" : "")
-                + "  by " + getDeveloper()
-                + "  €" + getAppCost()
-                + "  Rating: "+ calculateRating()
-                + "  Size: " + getAppSize();
+                + (isRecommendedApp() ? "  <Recommended>" : "")
+                + "\n  by " + getDeveloper()
+                + "\n  €" + getAppCost()
+                + "\n  Rating: " + calculateRating()
+                + "\n  Size: " + getAppSize();
 
     }
 
